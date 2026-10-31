@@ -1,0 +1,115 @@
+erDiagram
+    %% =====================================================================
+    %% COMPLETE IMPLEMENTATION ERD FOR FRUIT SUPPLY CHAIN MANAGEMENT SYSTEM
+    %% =====================================================================
+
+    ROLES ||--o{ ROLE_PERMISSIONS : contains
+    PERMISSIONS ||--o{ ROLE_PERMISSIONS : granted_to
+    USERS ||--o{ USER_ROLES : assigned
+    ROLES ||--o{ USER_ROLES : has
+
+    SUPPLIERS ||--o{ FARMERS : engages
+    FARMERS ||--o{ ORCHARDS : owns
+
+    FRUIT_CATEGORIES ||--o{ FRUIT_PRODUCTS : categorizes
+    UNITS_OF_MEASURE ||--o{ FRUIT_PRODUCTS : measured_in
+    UNITS_OF_MEASURE ||--o{ UNIT_CONVERSIONS : converts_from
+    UNITS_OF_MEASURE ||--o{ UNIT_CONVERSIONS : converts_to
+    FRUIT_PRODUCTS ||--o{ FRUIT_VARIETIES : includes
+
+    WAREHOUSES ||--o{ WAREHOUSE_ZONES : partitioned_into
+    WAREHOUSE_ZONES ||--o{ STORAGE_LOCATIONS : houses
+    WAREHOUSES ||--o{ TEMPERATURE_LOGS : monitored_by
+
+    USERS ||--o{ PURCHASE_REQUISITIONS : requests
+    PURCHASE_REQUISITIONS ||--|{ PURCHASE_REQUISITION_ITEMS : contains
+    FRUIT_PRODUCTS ||--o{ PURCHASE_REQUISITION_ITEMS : itemized
+
+    SUPPLIERS ||--o{ PURCHASE_ORDERS : fulfills
+    WAREHOUSES ||--o{ PURCHASE_ORDERS : delivers_to
+    USERS ||--o{ PURCHASE_ORDERS : manages
+    PURCHASE_ORDERS ||--|{ PURCHASE_ORDER_ITEMS : specifies
+    FRUIT_PRODUCTS ||--o{ PURCHASE_ORDER_ITEMS : targets
+    FRUIT_GRADES ||--o{ PURCHASE_ORDER_ITEMS : graded_as
+
+    PURCHASE_ORDERS ||--o{ GOODS_RECEIPTS : logged_under
+    WAREHOUSES ||--o{ GOODS_RECEIPTS : received_at
+    GOODS_RECEIPTS ||--|{ GOODS_RECEIPT_ITEMS : verifies
+    PURCHASE_ORDER_ITEMS ||--o{ GOODS_RECEIPT_ITEMS : reconciled_with
+
+    GOODS_RECEIPT_ITEMS ||--o{ INVENTORY_BATCHES : creates
+    FRUIT_PRODUCTS ||--o{ INVENTORY_BATCHES : batch_product
+    SUPPLIERS ||--o{ INVENTORY_BATCHES : sourced_from
+    WAREHOUSES ||--o{ INVENTORY_BATCHES : stored_at
+    STORAGE_LOCATIONS ||--o{ INVENTORY_BATCHES : situated_in
+    FRUIT_GRADES ||--o{ INVENTORY_BATCHES : batch_grade
+
+    WAREHOUSES ||--o{ INVENTORY_BALANCES : aggregated_at
+    FRUIT_PRODUCTS ||--o{ INVENTORY_BALANCES : physical_balance
+
+    INVENTORY_BATCHES ||--o{ INVENTORY_MOVEMENTS : movements_logged
+    USERS ||--o{ INVENTORY_MOVEMENTS : executed_by
+    WAREHOUSES ||--o{ INVENTORY_MOVEMENTS : source_wh
+    WAREHOUSES ||--o{ INVENTORY_MOVEMENTS : destination_wh
+
+    WAREHOUSES ||--o{ STOCK_ADJUSTMENTS : adjusted_at
+    STOCK_ADJUSTMENTS ||--|{ STOCK_ADJUSTMENT_ITEMS : details
+    INVENTORY_BATCHES ||--o{ STOCK_ADJUSTMENT_ITEMS : modifies
+
+    WAREHOUSES ||--o{ STOCK_TRANSFERS : transfer_from
+    WAREHOUSES ||--o{ STOCK_TRANSFERS : transfer_to
+    STOCK_TRANSFERS ||--|{ STOCK_TRANSFER_ITEMS : contains
+    INVENTORY_BATCHES ||--o{ STOCK_TRANSFER_ITEMS : batch_moved
+
+    INVENTORY_BATCHES ||--o{ QUALITY_INSPECTIONS : inspected
+    USERS ||--o{ QUALITY_INSPECTIONS : inspected_by
+    QUALITY_INSPECTIONS ||--|{ QUALITY_INSPECTION_ITEMS : measured
+    QUALITY_INSPECTIONS ||--o{ QUALITY_CERTIFICATES : certifies
+
+    INVENTORY_BATCHES ||--o{ SPOILAGE_RECORDS : spoiled_from
+    SPOILAGE_REASONS ||--o{ SPOILAGE_RECORDS : classified_as
+
+    CUSTOMERS ||--o{ SALES_ORDERS : places
+    USERS ||--o{ SALES_ORDERS : booked_by
+    SALES_ORDERS ||--|{ SALES_ORDER_ITEMS : lists
+    FRUIT_PRODUCTS ||--o{ SALES_ORDER_ITEMS : sells
+    FRUIT_GRADES ||--o{ SALES_ORDER_ITEMS : grade_sold
+
+    SALES_ORDER_ITEMS ||--o{ SALES_ORDER_ALLOCATIONS : batch_allocated
+    INVENTORY_BATCHES ||--o{ SALES_ORDER_ALLOCATIONS : fefo_draws_from
+
+    SALES_ORDERS ||--o{ INVENTORY_RESERVATIONS : holds_stock
+    INVENTORY_RESERVATIONS ||--|{ INVENTORY_RESERVATION_ITEMS : reserves
+    INVENTORY_BATCHES ||--o{ INVENTORY_RESERVATION_ITEMS : stock_reserved
+
+    SALES_ORDERS ||--o{ SALES_INVOICES : bills
+    CUSTOMERS ||--o{ SALES_INVOICES : charged_to
+    SALES_INVOICES ||--|{ SALES_INVOICE_ITEMS : breakdown
+    SALES_INVOICES ||--o{ CUSTOMER_PAYMENTS : paid_by
+    PAYMENT_METHODS ||--o{ CUSTOMER_PAYMENTS : method_used
+    SALES_INVOICES ||--o{ ACCOUNTS_RECEIVABLE : recorded_in
+
+    SALES_ORDERS ||--o{ SALES_RETURNS : returns_against
+    SALES_RETURNS ||--|{ SALES_RETURN_ITEMS : itemized
+
+    DELIVERY_ROUTES ||--o{ ROUTE_STOPS : consists_of
+    SALES_ORDERS ||--o{ SHIPMENTS : fulfilled_via
+    VEHICLES ||--o{ SHIPMENTS : transported_by
+    DRIVERS ||--o{ SHIPMENTS : piloted_by
+    DELIVERY_ROUTES ||--o{ SHIPMENTS : navigates
+    SHIPMENTS ||--|{ SHIPMENT_ITEMS : delivers
+    INVENTORY_BATCHES ||--o{ SHIPMENT_ITEMS : pallet_loaded
+    SHIPMENTS ||--o{ SHIPMENT_TRACKING_EVENTS : reports_status
+
+    PURCHASE_ORDERS ||--o{ SUPPLIER_INVOICES : invoiced_by
+    SUPPLIERS ||--o{ SUPPLIER_INVOICES : billed_from
+    SUPPLIER_INVOICES ||--|{ SUPPLIER_INVOICE_ITEMS : contains
+    SUPPLIER_INVOICES ||--o{ SUPPLIER_PAYMENTS : settles
+    PAYMENT_METHODS ||--o{ SUPPLIER_PAYMENTS : remittance_type
+    SUPPLIER_INVOICES ||--o{ ACCOUNTS_PAYABLE : recorded_in
+
+    EXPENSE_CATEGORIES ||--o{ EXPENSES : categorized_by
+    WAREHOUSES ||--o{ EXPENSES : incurred_at
+    USERS ||--o{ EXPENSES : submitted_by
+    USERS ||--o{ NOTIFICATIONS : receives
+    USERS ||--o{ AUDIT_LOGS : logged_action

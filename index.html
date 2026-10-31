@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      // Defensive guard for browser extensions / request interceptors attempting to hook window.fetch
+      // Fixes "TypeError: Cannot set property fetch of #<Window> which has only a getter"
+      (function() {
+        try {
+          var _currentFetch = window.fetch;
+          Object.defineProperty(window, 'fetch', {
+            get: function() {
+              return _currentFetch;
+            },
+            set: function(fn) {
+              _currentFetch = fn;
+            },
+            configurable: true,
+            enumerable: true
+          });
+        } catch (e) {
+          // Ignore if environment prohibits property redefinition
+        }
+
+        // Prevent rogue browser extension errors from interrupting application runtime
+        window.addEventListener('error', function(event) {
+          if (event && event.filename && event.filename.indexOf('chrome-extension://') !== -1) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+        }, true);
+      })();
+    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Fruit Supply Chain Management System (FSCMS)</title>
+    <meta name="description" content="Enterprise end-to-end Fruit Supply Chain Management System featuring relational database architecture, FEFO batch tracking, procurement, cold-chain logistics, and analytics." />
+    <meta property="og:title" content="Fruit Supply Chain Management System (FSCMS)" />
+    <meta property="og:description" content="Enterprise end-to-end Fruit Supply Chain Management System featuring relational database architecture, FEFO batch tracking, procurement, cold-chain logistics, and analytics." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  </head>
+  <body class="bg-stone-950 text-stone-100 antialiased font-sans selection:bg-emerald-500 selection:text-white">
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

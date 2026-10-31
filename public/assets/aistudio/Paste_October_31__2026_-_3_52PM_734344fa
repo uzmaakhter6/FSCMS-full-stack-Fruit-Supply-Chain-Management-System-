@@ -1,0 +1,1161 @@
+Here is a professional, detailed, copy-paste-ready prompt for building a complete full-stack Supply Chain Management System for hot-selling fruits, using MySQL as the database and including a complete ERD, relational database design (RDBMS), inventory management, procurement, sales, logistics, and analytics.
+
+The system is designed for a real fruit trading, wholesale, distribution, or export business, with special attention to fruit perishability, cold storage, batch tracking, expiry dates, seasonal demand, and profit margins.
+
+# MASTER PROMPT: FULL-STACK FRUIT SUPPLY CHAIN MANAGEMENT SYSTEM
+
+## 1. Project Overview
+
+Act as a Senior Full-Stack Software Architect, Database Engineer, Supply Chain Management Expert, UI/UX Designer, and DevOps Engineer.
+
+Build a complete, production-ready, end-to-end **Fruit Supply Chain Management System (FSCMS)** for managing the procurement, storage, distribution, wholesale, retail, and sales of high-demand fruits.
+
+The application must manage the entire fruit supply chain, from farmers and orchards to suppliers, warehouses, distributors, retailers, and customers.
+
+The system must use:
+
+- MySQL as the primary relational database.
+- A properly normalized RDBMS architecture.
+- A complete Entity Relationship Diagram (ERD).
+- A modern, responsive frontend.
+- A secure and scalable backend API.
+- Real-time inventory tracking.
+- Automated supply chain workflows.
+- Business intelligence dashboards.
+- Complete CRUD operations for all major modules.
+
+Do not create a static UI, dummy dashboard, or frontend-only prototype. Every major feature must be connected to the database and functional.
+
+---
+
+## 2. Recommended Technology Stack
+
+Use the following technology stack:
+
+### Frontend
+- React.js with TypeScript.
+- Vite.
+- Tailwind CSS.
+- Shadcn/UI.
+- Recharts for analytics.
+- React Hook Form with Zod validation.
+- TanStack Query for API data fetching.
+- React Router for navigation.
+
+### Backend
+- Node.js.
+- Express.js with TypeScript.
+- RESTful API architecture.
+- Prisma ORM or TypeORM.
+- JWT-based authentication.
+- Role-Based Access Control (RBAC).
+
+### Database
+- MySQL 8.0 or later.
+- InnoDB storage engine.
+- UTF-8 using utf8mb4.
+- Foreign key constraints.
+- Database transactions.
+- Normalized relational schema.
+- Database migrations and seed data.
+
+### Development and Deployment
+- Docker and Docker Compose.
+- Environment variables.
+- Git and GitHub.
+- Swagger/OpenAPI documentation.
+- Vercel for frontend deployment.
+- Railway, Render, or a suitable MySQL-compatible hosting service for backend and database.
+
+The application must be easy to open, configure, and run in VS Code.
+
+---
+
+## 3. Business Requirements
+
+The application must support the complete fruit supply chain.
+
+### Fruit categories
+
+Include high-demand fruits such as:
+
+- Mangoes.
+- Bananas.
+- Apples.
+- Oranges.
+- Grapes.
+- Strawberries.
+- Watermelons.
+- Pomegranates.
+- Dates.
+- Avocados.
+- Kiwis.
+- Pineapples.
+- Peaches.
+- Guavas.
+- Papayas.
+
+Allow administrators to add new fruit categories and products dynamically.
+
+Each fruit product must support:
+
+- Product name.
+- SKU.
+- Category.
+- Variety.
+- Grade.
+- Origin country.
+- Harvest season.
+- Unit of measurement.
+- Purchase price.
+- Selling price.
+- Wholesale price.
+- Retail price.
+- Storage temperature.
+- Expected shelf life.
+- Minimum stock level.
+- Product image.
+- Active/inactive status.
+
+Support multiple units, including kilograms, grams, cartons, crates, pieces, and tons.
+
+The system must support unit conversions between different packaging formats.
+
+---
+
+## 4. Core System Modules
+
+### A. Dashboard and Business Overview
+
+Create a comprehensive dashboard with:
+
+- Total revenue.
+- Total purchases.
+- Gross profit.
+- Net profit.
+- Current inventory value.
+- Total stock quantity.
+- Fruits nearing expiry.
+- Wastage and spoilage percentage.
+- Low-stock alerts.
+- Pending purchase orders.
+- Pending customer orders.
+- Supplier performance.
+- Warehouse utilization.
+- Sales trends.
+- Most profitable fruits.
+- Best-selling fruits.
+- Seasonal demand forecasts.
+
+Include interactive charts, filters, date ranges, and drill-down functionality.
+
+All metrics must be calculated from actual database records.
+
+### B. Supplier and Farmer Management
+
+Create a complete supplier management module.
+
+Features:
+
+- Supplier registration.
+- Farmer and orchard profiles.
+- Supplier contact information.
+- Business address.
+- Tax information.
+- Bank details.
+- Supplier category.
+- Fruit sourcing regions.
+- Payment terms.
+- Supplier rating.
+- Purchase history.
+- Outstanding payments.
+- Supplier performance reports.
+
+Allow multiple suppliers to provide the same fruit.
+
+### C. Procurement Management
+
+Implement the complete purchasing workflow.
+
+1. Create a purchase requisition.
+2. Select supplier.
+3. Add fruit products.
+4. Specify quantity and unit.
+5. Add purchase price.
+6. Calculate total cost.
+7. Create purchase order.
+8. Approve purchase order.
+9. Receive goods.
+10. Inspect quality.
+11. Record accepted and rejected quantities.
+12. Create inventory batches.
+13. Generate supplier invoice.
+14. Record supplier payment.
+
+Purchase order statuses:
+
+- Draft.
+- Pending Approval.
+- Approved.
+- Partially Received.
+- Fully Received.
+- Cancelled.
+
+Use database transactions to ensure stock is updated only after successful goods receipt.
+
+### D. Inventory and Batch Management
+
+This is one of the most important modules.
+
+Implement:
+
+- Real-time stock tracking.
+- Inventory by warehouse.
+- Inventory by fruit.
+- Inventory by batch.
+- Inventory by grade.
+- Inventory by supplier.
+- Inventory by expiry date.
+- Inventory by storage location.
+- Stock adjustments.
+- Stock transfers.
+- Stock reservations.
+- Stock reconciliation.
+- Damaged inventory.
+- Expired inventory.
+- Stock movement history.
+
+Each batch must have:
+
+- Unique batch number.
+- Fruit product ID.
+- Supplier ID.
+- Purchase order reference.
+- Warehouse ID.
+- Receiving date.
+- Harvest date.
+- Expiry date.
+- Quantity received.
+- Quantity available.
+- Quantity reserved.
+- Quantity damaged.
+- Purchase cost.
+- Quality inspection status.
+
+Implement FEFO (First Expired, First Out) inventory allocation.
+
+Use FIFO where expiry dates are unavailable.
+
+Never allow negative inventory unless an administrator explicitly enables that policy.
+
+### E. Warehouse Management
+
+Create a warehouse management system supporting:
+
+- Multiple warehouses.
+- Cold storage facilities.
+- Storage zones.
+- Storage racks.
+- Warehouse capacity.
+- Temperature monitoring.
+- Humidity monitoring.
+- Inventory transfers.
+- Inbound shipments.
+- Outbound shipments.
+- Stock movement tracking.
+
+Each warehouse must have multiple storage locations.
+
+Support cold-chain monitoring and temperature threshold alerts.
+
+### F. Quality Control and Fruit Spoilage
+
+Develop a fruit quality management module.
+
+Features:
+
+- Incoming quality inspection.
+- Fruit grading.
+- Weight verification.
+- Color and ripeness assessment.
+- Visual inspection.
+- Quality inspection records.
+- Rejected goods.
+- Spoilage tracking.
+- Damaged goods reporting.
+- Quality certificates.
+- Supplier quality score.
+
+Calculate spoilage percentage:
+
+Spoilage % = (Spoiled Quantity / Total Received Quantity) × 100
+
+Record the reason for spoilage:
+
+- Over-ripening.
+- Temperature failure.
+- Transportation damage.
+- Poor packaging.
+- Disease or infection.
+- Expiry.
+- Other.
+
+Maintain complete audit history for quality-related inventory changes.
+
+### G. Sales and Order Management
+
+Create a complete sales management system.
+
+Features:
+
+- Customer registration.
+- Customer categories.
+- Retail customers.
+- Wholesale customers.
+- Distributor accounts.
+- Customer-specific pricing.
+- Sales order creation.
+- Product selection.
+- Batch allocation.
+- Discounts.
+- Tax calculations.
+- Invoice generation.
+- Payment tracking.
+- Order cancellation.
+- Returns and refunds.
+
+Order statuses:
+
+- Draft.
+- Confirmed.
+- Processing.
+- Packed.
+- Dispatched.
+- Delivered.
+- Cancelled.
+- Returned.
+
+Implement FEFO batch allocation when fulfilling orders.
+
+Support partial order fulfillment.
+
+### H. Logistics and Distribution
+
+Develop a logistics management module.
+
+Features:
+
+- Shipment creation.
+- Vehicle management.
+- Driver management.
+- Transport company management.
+- Route planning.
+- Delivery scheduling.
+- Shipment tracking.
+- Transportation costs.
+- Fuel costs.
+- Cold-chain transport.
+- Delivery proof.
+- Delivery status.
+- Customer delivery notifications.
+
+Each shipment must be linked to a sales order and the relevant inventory batches.
+
+Track:
+
+- Shipment departure.
+- Expected delivery.
+- Actual delivery.
+- Transportation temperature.
+- Shipment condition.
+- Delivery cost.
+- Shipment status.
+
+### I. Customer Relationship Management (CRM)
+
+Include:
+
+- Customer profiles.
+- Customer purchase history.
+- Customer segmentation.
+- Credit limits.
+- Outstanding balances.
+- Customer payment history.
+- Customer communication records.
+- Customer feedback.
+- Loyalty discounts.
+- Repeat purchase analysis.
+
+### J. Financial Management
+
+Build a basic integrated financial management module.
+
+Features:
+
+- Accounts payable.
+- Accounts receivable.
+- Supplier payments.
+- Customer payments.
+- Purchase invoices.
+- Sales invoices.
+- Expense management.
+- Transportation expenses.
+- Warehouse expenses.
+- Spoilage loss.
+- Gross profit.
+- Net profit.
+- Cash flow reports.
+
+Support payment methods:
+
+- Cash.
+- Bank transfer.
+- Card.
+- Digital wallet.
+- Credit.
+
+Maintain accurate financial records and avoid duplicate payment entries.
+
+### K. Reporting and Analytics
+
+Provide downloadable reports in CSV, Excel, and PDF formats.
+
+Required reports:
+
+- Daily sales.
+- Monthly sales.
+- Annual sales.
+- Purchase report.
+- Supplier performance.
+- Inventory valuation.
+- Expiry report.
+- Spoilage report.
+- Profit and loss.
+- Warehouse utilization.
+- Customer outstanding balances.
+- Supplier outstanding balances.
+- Transportation expenses.
+- Fruit demand analysis.
+- Seasonal sales analysis.
+
+Allow filtering by date, fruit, supplier, warehouse, customer, and status.
+
+---
+
+## 5. MySQL Database Architecture and RDBMS Design
+
+Design a normalized relational database using MySQL.
+
+Follow:
+
+- First Normal Form (1NF).
+- Second Normal Form (2NF).
+- Third Normal Form (3NF).
+- Referential integrity.
+- Primary key constraints.
+- Foreign key constraints.
+- Unique constraints.
+- Check constraints.
+- Appropriate indexes.
+- Transaction management.
+
+Use surrogate primary keys, preferably BIGINT UNSIGNED AUTO_INCREMENT.
+
+Use DECIMAL for financial values and quantities where precision is important.
+
+Use DATETIME or TIMESTAMP for dates.
+
+Do not store multiple product IDs, supplier IDs, or warehouse IDs in a single field.
+
+Do not duplicate supplier, customer, product, or warehouse details across transaction tables.
+
+Create junction tables for many-to-many relationships.
+
+Use immutable transaction records and inventory movement history.
+
+### Required database tables
+
+Create the following tables and additional tables where necessary.
+
+#### Master data
+
+1. users
+2. roles
+3. permissions
+4. role_permissions
+5. user_roles
+6. suppliers
+7. farmers
+8. orchards
+9. customers
+10. fruit_categories
+11. fruit_products
+12. fruit_varieties
+13. fruit_grades
+14. units_of_measure
+15. unit_conversions
+16. warehouses
+17. warehouse_zones
+18. storage_locations
+19. vehicles
+20. drivers
+21. transport_companies
+
+#### Procurement
+
+22. purchase_requisitions
+23. purchase_requisition_items
+24. purchase_orders
+25. purchase_order_items
+26. goods_receipts
+27. goods_receipt_items
+28. supplier_invoices
+29. supplier_invoice_items
+30. supplier_payments
+
+#### Inventory
+
+31. inventory_batches
+32. inventory_balances
+33. inventory_movements
+34. stock_adjustments
+35. stock_adjustment_items
+36. stock_transfers
+37. stock_transfer_items
+38. inventory_reservations
+39. inventory_reservation_items
+
+#### Quality control
+
+40. quality_inspections
+41. quality_inspection_items
+42. spoilage_records
+43. spoilage_reasons
+44. temperature_logs
+45. quality_certificates
+
+#### Sales
+
+46. sales_orders
+47. sales_order_items
+48. sales_order_allocations
+49. sales_invoices
+50. sales_invoice_items
+51. customer_payments
+52. sales_returns
+53. sales_return_items
+
+#### Logistics
+
+54. shipments
+55. shipment_items
+56. shipment_tracking_events
+57. delivery_routes
+58. route_stops
+
+#### Finance and analytics
+
+59. expenses
+60. expense_categories
+61. payment_methods
+62. accounts_payable
+63. accounts_receivable
+64. audit_logs
+65. notifications
+66. system_settings
+
+Create all missing relationship tables required for a complete and functional application.
+
+---
+
+## 6. Entity Relationship Diagram (ERD)
+
+Generate a complete ERD using Mermaid ER diagram syntax.
+
+The ERD must represent the actual database schema implemented in MySQL.
+
+Include:
+
+- Every major entity.
+- Primary keys.
+- Foreign keys.
+- One-to-one relationships.
+- One-to-many relationships.
+- Many-to-many relationships.
+- Junction tables.
+- Inventory batch relationships.
+- Procurement relationships.
+- Sales relationships.
+- Warehouse relationships.
+- Financial relationships.
+
+Use proper cardinality notation.
+
+The following is the minimum conceptual ERD:
+
+```mermaid
+erDiagram
+    SUPPLIERS ||--o{ PURCHASE_ORDERS : provides
+    PURCHASE_ORDERS ||--|{ PURCHASE_ORDER_ITEMS : contains
+    FRUIT_PRODUCTS ||--o{ PURCHASE_ORDER_ITEMS : purchased
+    PURCHASE_ORDERS ||--o{ GOODS_RECEIPTS : receives
+    GOODS_RECEIPTS ||--|{ GOODS_RECEIPT_ITEMS : contains
+    GOODS_RECEIPT_ITEMS ||--o{ INVENTORY_BATCHES : creates
+
+    FRUIT_PRODUCTS ||--o{ INVENTORY_BATCHES : has
+    WAREHOUSES ||--o{ INVENTORY_BATCHES : stores
+    STORAGE_LOCATIONS ||--o{ INVENTORY_BATCHES : contains
+
+    INVENTORY_BATCHES ||--o{ INVENTORY_MOVEMENTS : tracks
+    INVENTORY_BATCHES ||--o{ QUALITY_INSPECTIONS : inspected
+    INVENTORY_BATCHES ||--o{ SPOILAGE_RECORDS : loses
+
+    CUSTOMERS ||--o{ SALES_ORDERS : places
+    SALES_ORDERS ||--|{ SALES_ORDER_ITEMS : contains
+    FRUIT_PRODUCTS ||--o{ SALES_ORDER_ITEMS : sold
+
+    SALES_ORDERS ||--o{ SALES_ORDER_ALLOCATIONS : allocates
+    INVENTORY_BATCHES ||--o{ SALES_ORDER_ALLOCATIONS : fulfills
+
+    SALES_ORDERS ||--o{ SHIPMENTS : dispatched
+    SHIPMENTS ||--o{ SHIPMENT_TRACKING_EVENTS : tracks
+
+    SALES_ORDERS ||--o{ SALES_INVOICES : invoiced
+    SALES_INVOICES ||--o{ CUSTOMER_PAYMENTS : paid
+
+    SUPPLIERS ||--o{ SUPPLIER_INVOICES : invoiced
+    SUPPLIER_INVOICES ||--o{ SUPPLIER_PAYMENTS : paid
+```
+
+Expand this conceptual ERD into a complete implementation-level ERD covering all database tables.
+
+Generate a separate ERD file:
+
+`docs/fruit_supply_chain_erd.mmd`
+
+Also provide:
+
+- PNG or SVG ERD export.
+- Database schema documentation.
+- Data dictionary.
+- Relationship explanation.
+- Indexing strategy.
+- Database migration scripts.
+
+---
+
+## 7. Critical Relational Database Rules
+
+Implement the following rules:
+
+### Inventory integrity
+
+- Every inventory batch must reference an existing fruit product.
+- Every inventory batch must reference an existing warehouse.
+- Every inventory movement must reference a valid batch.
+- Inventory balances must not become negative.
+- Inventory quantities must be updated transactionally.
+- Every stock change must have a movement record.
+- Inventory reservations must be linked to sales orders.
+- Batch allocations must never exceed available quantities.
+
+### Purchase integrity
+
+- Every purchase order must reference a valid supplier.
+- Every purchase order item must reference a valid fruit product.
+- Goods received must not exceed the approved order quantity unless explicitly authorized.
+- Purchase order status must reflect the actual receiving process.
+
+### Sales integrity
+
+- Every sales order must reference a valid customer.
+- Every sales order item must reference a valid fruit product.
+- Sales invoices must reconcile with sales order totals.
+- Customer payments must not exceed the outstanding balance unless recorded as an advance payment.
+- Returned quantities must not exceed delivered quantities.
+
+### Financial integrity
+
+- Use DECIMAL(15,2) for monetary amounts.
+- Store currency codes using ISO 4217 conventions.
+- Never use FLOAT or DOUBLE for financial calculations.
+- Record payment transactions using unique transaction references.
+- Maintain audit history for financial changes.
+
+### Database transaction example
+
+When receiving fruit from a supplier:
+
+1. Start transaction.
+2. Lock the relevant purchase order rows.
+3. Validate received quantities.
+4. Insert goods receipt.
+5. Insert goods receipt items.
+6. Create inventory batches.
+7. Update inventory balances.
+8. Insert inventory movement records.
+9. Update purchase order status.
+10. Commit transaction.
+
+If any operation fails, roll back the complete transaction.
+
+---
+
+## 8. Backend API Development
+
+Build RESTful APIs with validation, authentication, and authorization.
+
+Example endpoints:
+
+### Authentication
+
+POST /api/auth/register
+
+POST /api/auth/login
+
+POST /api/auth/logout
+
+GET /api/auth/me
+
+POST /api/auth/refresh
+
+### Products
+
+GET /api/products
+
+POST /api/products
+
+GET /api/products/:id
+
+PUT /api/products/:id
+
+DELETE /api/products/:id
+
+### Suppliers
+
+GET /api/suppliers
+
+POST /api/suppliers
+
+GET /api/suppliers/:id
+
+PUT /api/suppliers/:id
+
+DELETE /api/suppliers/:id
+
+### Procurement
+
+GET /api/purchase-orders
+
+POST /api/purchase-orders
+
+GET /api/purchase-orders/:id
+
+POST /api/purchase-orders/:id/approve
+
+POST /api/purchase-orders/:id/receive
+
+### Inventory
+
+GET /api/inventory
+
+GET /api/inventory/batches
+
+GET /api/inventory/low-stock
+
+GET /api/inventory/expiring
+
+POST /api/inventory/adjustments
+
+POST /api/inventory/transfers
+
+### Sales
+
+GET /api/sales-orders
+
+POST /api/sales-orders
+
+POST /api/sales-orders/:id/confirm
+
+POST /api/sales-orders/:id/fulfill
+
+POST /api/sales-orders/:id/cancel
+
+### Logistics
+
+GET /api/shipments
+
+POST /api/shipments
+
+PUT /api/shipments/:id/status
+
+POST /api/shipments/:id/deliver
+
+### Reports
+
+GET /api/reports/sales
+
+GET /api/reports/inventory
+
+GET /api/reports/profit-loss
+
+GET /api/reports/spoilage
+
+GET /api/reports/supplier-performance
+
+Create additional endpoints for all modules.
+
+Every API must include:
+
+- Input validation.
+- Error handling.
+- Authorization.
+- Pagination.
+- Filtering.
+- Sorting.
+- Appropriate HTTP status codes.
+- Consistent JSON responses.
+
+---
+
+## 9. Frontend UI/UX Design
+
+Build a modern enterprise-level dashboard.
+
+### Design style
+
+Use a clean, premium SaaS interface.
+
+Color palette:
+
+- Primary: Deep green.
+- Secondary: Fresh lime green.
+- Background: Off-white.
+- Text: Dark charcoal.
+- Warning: Amber.
+- Error: Red.
+
+Use:
+
+- Responsive sidebar.
+- Top navigation.
+- Dashboard cards.
+- Data tables.
+- Search filters.
+- Modal forms.
+- Confirmation dialogs.
+- Toast notifications.
+- Breadcrumb navigation.
+- Interactive charts.
+- Loading skeletons.
+- Empty states.
+- Error states.
+
+### Main navigation
+
+Dashboard
+
+Products
+
+Suppliers
+
+Procurement
+
+Inventory
+
+Warehouses
+
+Quality Control
+
+Sales
+
+Customers
+
+Logistics
+
+Finance
+
+Reports
+
+Users & Roles
+
+Settings
+
+Every navigation item must open a working page.
+
+---
+
+## 10. User Roles and Permissions
+
+Implement the following roles:
+
+| Role | Access |
+|---|---|
+| Super Admin | Complete system access |
+| Manager | Business management and reports |
+| Procurement Officer | Suppliers and purchases |
+| Warehouse Manager | Inventory and warehouses |
+| Quality Inspector | Inspections and spoilage |
+| Sales Manager | Sales and customer management |
+| Accountant | Financial records and payments |
+| Logistics Manager | Shipments and transportation |
+| Staff | Restricted operational access |
+
+Use RBAC middleware on the backend.
+
+Hiding frontend buttons is not sufficient security. All permissions must be validated by the backend.
+
+---
+
+## 11. Automation and Smart Features
+
+Implement automated workflows:
+
+- Low-stock alerts.
+- Expiry notifications.
+- Automatic FEFO batch selection.
+- Purchase suggestions based on reorder levels.
+- Seasonal demand forecasting.
+- Supplier performance scoring.
+- Automatic invoice calculations.
+- Shipment status notifications.
+- Spoilage trend analysis.
+- Inventory replenishment recommendations.
+
+Forecasting should use historical sales data and seasonal trends.
+
+Start with a statistical forecasting method such as moving averages or exponential smoothing.
+
+Do not present forecast results as guaranteed sales.
+
+---
+
+## 12. Security Requirements
+
+Implement:
+
+- Password hashing using bcrypt or Argon2.
+- Secure authentication.
+- JWT access tokens.
+- Refresh token rotation.
+- Input validation.
+- SQL injection prevention.
+- CORS configuration.
+- Rate limiting.
+- Secure HTTP headers.
+- Environment-based secrets.
+- Audit logging.
+- Role-based access control.
+- Database least-privilege access.
+
+Do not expose database credentials in frontend code.
+
+Never store plaintext passwords.
+
+---
+
+## 13. Testing Requirements
+
+Create:
+
+### Unit tests
+- Product validation.
+- Purchase calculations.
+- Sales calculations.
+- Inventory calculations.
+- FEFO allocation.
+- Unit conversions.
+- Profit calculations.
+
+### Integration tests
+- Purchase order to goods receipt.
+- Goods receipt to inventory.
+- Sales order to inventory allocation.
+- Sales order to shipment.
+- Invoice to payment.
+- Stock transfer between warehouses.
+
+### End-to-end tests
+- User login.
+- Product creation.
+- Supplier creation.
+- Purchase order creation.
+- Inventory receiving.
+- Sales order fulfillment.
+- Report generation.
+
+Use realistic test data and verify database consistency.
+
+---
+
+## 14. Project Structure
+
+Organize the application as follows:
+
+```text
+fruit-supply-chain/
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── layouts/
+│   │   ├── hooks/
+│   │   ├── services/
+│   │   ├── types/
+│   │   └── utils/
+│   └── package.json
+│
+├── backend/
+│   ├── src/
+│   │   ├── controllers/
+│   │   ├── services/
+│   │   ├── routes/
+│   │   ├── middleware/
+│   │   ├── validators/
+│   │   ├── repositories/
+│   │   ├── utils/
+│   │   └── app.ts
+│   ├── prisma/
+│   │   ├── schema.prisma
+│   │   ├── migrations/
+│   │   └── seed.ts
+│   └── package.json
+│
+├── database/
+│   ├── schema.sql
+│   ├── seed.sql
+│   └── indexes.sql
+│
+├── docs/
+│   ├── fruit_supply_chain_erd.mmd
+│   ├── fruit_supply_chain_erd.svg
+│   ├── api_documentation.md
+│   ├── data_dictionary.md
+│   └── architecture.md
+│
+├── tests/
+├── docker-compose.yml
+├── .env.example
+├── README.md
+└── package.json
+```
+
+---
+
+## 15. Required Deliverables
+
+Generate a complete project with:
+
+1. Full-stack React frontend.
+2. Node.js backend.
+3. MySQL database schema.
+4. Complete ERD in Mermaid.
+5. ERD exported as SVG or PNG.
+6. Database migration scripts.
+7. Database seed data.
+8. API documentation.
+9. Authentication and RBAC.
+10. Inventory and batch management.
+11. Procurement workflow.
+12. Sales and logistics workflow.
+13. Quality control and spoilage tracking.
+14. Analytics dashboard.
+15. Automated reports.
+16. Unit and integration tests.
+17. Docker Compose configuration.
+18. `.env.example`.
+19. Complete README.
+20. Installation and deployment guide.
+
+---
+
+## 16. Development Execution Instructions
+
+Build the application in the following phases.
+
+### Phase 1: Architecture and Database
+
+- Analyze business requirements.
+- Design the complete relational database.
+- Create the data dictionary.
+- Generate the complete ERD.
+- Implement MySQL schema.
+- Create migrations and seed scripts.
+
+### Phase 2: Backend
+
+- Implement authentication.
+- Implement RBAC.
+- Create database models.
+- Build APIs.
+- Implement business logic.
+- Add transactional inventory operations.
+- Implement validation and error handling.
+
+### Phase 3: Frontend
+
+- Build dashboard.
+- Build navigation and layouts.
+- Implement all CRUD screens.
+- Connect all pages to APIs.
+- Implement forms and tables.
+- Add filters and reports.
+
+### Phase 4: Integration
+
+- Connect frontend to backend.
+- Connect backend to MySQL.
+- Test complete procurement workflows.
+- Test inventory movements.
+- Test sales fulfillment.
+- Verify relational integrity.
+
+### Phase 5: Production Readiness
+
+- Run tests.
+- Optimize database queries.
+- Add indexes.
+- Implement logging.
+- Configure Docker.
+- Prepare deployment.
+- Create documentation.
+
+---
+
+## 17. Final Acceptance Criteria
+
+The project is considered complete only when:
+
+- The frontend is functional.
+- The backend is functional.
+- MySQL is connected.
+- The ERD matches the implemented schema.
+- All foreign key relationships work.
+- CRUD operations work across modules.
+- Inventory updates correctly.
+- FEFO allocation works.
+- Purchase orders can be received.
+- Sales orders can be fulfilled.
+- Financial records reconcile.
+- Reports use real database data.
+- Authentication and permissions work.
+- The application runs locally using documented commands.
+
+Do not stop after creating the ERD or dashboard.
+
+Do not use hardcoded values for production business data.
+
+Do not leave major modules as placeholders.
+
+If any external service requires API credentials, implement the integration interface and document the required environment variables.
+
+**Start by creating the complete relational database schema and implementation-level ERD. Then implement the backend, frontend, integrations, testing, and deployment files.**
+
+Deliver the final project as a complete, runnable, maintainable, and production-oriented application.
+
+### Recommended next step
+
+Use this prompt in an AI coding environment such as Cursor, Claude Code, Antigravity, or Lovable. For the complete MySQL database, backend, and ERD, a coding agent with terminal and file access is preferable to a frontend-only builder.
+
+I can also turn this into a complete MySQL `schema.sql` file with all 66 tables, foreign keys, indexes, and a detailed ERD.

@@ -1,0 +1,6 @@
+{
+  "name": "Fruit Supply Chain Management System (FSCMS)",
+  "description": "Enterprise end-to-end Fruit Supply Chain Management System featuring relational database architecture, FEFO batch tracking, procurement, cold-chain logistics, and analytics.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

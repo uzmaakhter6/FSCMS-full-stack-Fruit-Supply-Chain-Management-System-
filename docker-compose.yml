@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: fscms_mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_secure_password_fscms
+      MYSQL_DATABASE: fruit_supply_chain_db
+      MYSQL_USER: fscms_user
+      MYSQL_PASSWORD: fscms_secure_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql
+      - ./database/seed.sql:/docker-entrypoint-initdb.d/02_seed.sql
+      - ./database/indexes.sql:/docker-entrypoint-initdb.d/03_indexes.sql
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "fscms_user", "-pfscms_secure_password"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: fscms_app
+    restart: always
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - "3000:3000"
+    environment:
+      PORT: 3000
+      NODE_ENV: production
+      DATABASE_URL: "mysql://fscms_user:fscms_secure_password@mysql:3306/fruit_supply_chain_db"
+      JWT_SECRET: fruit_supply_chain_jwt_secret_key_production_ready_9921
+
+volumes:
+  mysql_data:
